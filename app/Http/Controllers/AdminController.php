@@ -14,7 +14,8 @@ class AdminController extends Controller
 
     // Functions for Theatres
     public function theatreIndex(){
-        return view('admin.theatre.index');
+        $theatres = theatres::all();
+        return view('admin.theatre.index', compact('theatres'));
     }
 
     public function theatreAdd(Request $req){
@@ -24,10 +25,32 @@ class AdminController extends Controller
         return redirect()->route('theatre-index')->with('added', 'Theatre Added Successfully');
     }
 
+    public function theatreActive($id){
+        $theatre = theatres::find($id);
+        $theatre->status = "active";
+        $theatre->save();
+
+        return redirect()->back()->with('active', 'Theatre Activated');
+    }
+    public function theatreInactive($id){
+        $theatre = theatres::find($id);
+        $theatre->status = "inactive";
+        $theatre->save();
+
+        return redirect()->back()->with('inactive', 'Theatre Inactivated');
+    }
+
+    public function theatreDelete($id){
+        $theatre = theatres::find($id);
+        $theatre->delete();
+
+        return redirect()->back()->with('delete', 'Theatre Deleted');
+    }
+
 
     // Functions for Movies
     public function moviesIndex(){
-        $theatres = theatres::all();
+        $theatres = theatres::where('status' , '=', 'active')->get();
         return view('admin.movies.index' , compact('theatres'));
     }
 

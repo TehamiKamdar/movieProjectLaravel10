@@ -20,6 +20,9 @@ Route::get('/admin/dashboard', [AdminController::class , 'adminIndex']);
 
 Route::get('/admin/theatre', [AdminController::class , 'theatreIndex'])->name('theatre-index');
 Route::post('/admin/theatre', [AdminController::class , 'theatreAdd'])->name('theatre-add');
+Route::post('/admin/theatre/active/{id}', [AdminController::class , 'theatreActive'])->name('theatre-active');
+Route::post('/admin/theatre/inactive/{id}', [AdminController::class , 'theatreInactive'])->name('theatre-inactive');
+Route::post('/admin/theatre/delete/{id}', [AdminController::class , 'theatreDelete'])->name('theatre-delete');
 
 
 
